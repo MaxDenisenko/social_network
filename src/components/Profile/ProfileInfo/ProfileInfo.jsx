@@ -24,7 +24,7 @@ const ProfileInfo = (props) => {
           <span>
             <div>{props.profile.fullName}</div>
             <div>{props.profile.aboutMe}</div>
-            <div>Мои контакты:</div>
+            <div>Мои контакты :</div>
             <div>{props.profile.contacts.vk}</div>
           </span>
           <span></span>
