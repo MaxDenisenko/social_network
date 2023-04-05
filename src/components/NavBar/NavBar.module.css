@@ -1,0 +1,14 @@
+.nav {
+  grid-area: n;
+  background-color: grey;
+  padding: 20px;
+}
+a {
+  text-decoration: none;
+}
+a:focus {
+  color: green;
+}
+a.active {
+  color: green;
+}
