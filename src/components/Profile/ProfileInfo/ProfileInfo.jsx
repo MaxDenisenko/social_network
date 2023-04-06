@@ -30,8 +30,13 @@ const ProfileInfo = (props) => {
           <span>
             <div>{props.profile.fullName}</div>
             <div>{props.profile.aboutMe}</div>
-            <div>Мои контакты :</div>
-            <div>{props.profile.contacts.vk}</div>
+            <div>
+              <b>Контактные данные</b>
+            </div>
+            <div>
+              <b>Контак в ВК:</b>
+              {props.profile.contacts.vk}
+            </div>
           </span>
           <span></span>
         </div>
