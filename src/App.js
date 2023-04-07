@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
-import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import Music from './components/Music/Music';
 import News from './components/News/News';
@@ -42,6 +42,8 @@ class App extends React.Component {
               <Route path="/settings" element={<Settings />} />
               <Route path="/users" element={<UsersContainer />} />
               <Route path="/login" element={<Login />} />
+              <Route path='/' element={<Navigate replace to={'/profile'}/>}/>
+              <Route path='*' element={<div>404 not found</div>}/>
             </Routes>
           </div>
         </div>
