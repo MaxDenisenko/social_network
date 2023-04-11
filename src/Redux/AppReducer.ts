@@ -2,11 +2,14 @@ import { getAuthUserDataThunkCreator } from './AuthReducer';
 
 const SET_INITIALIZED = 'SET_INITIALIZED';
 
+export type initialState = {
+  initialized: boolean;
+};
 let initialState = {
   initialized: false,
 };
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: any): initialState => {
   switch (action.type) {
     case SET_INITIALIZED:
       return { ...state, initialized: true };
@@ -14,10 +17,12 @@ const appReducer = (state = initialState, action) => {
       return state;
   }
 };
+type initializedSuccess = {
+  type: typeof SET_INITIALIZED;
+};
+export const initializedSuccess = (): initializedSuccess => ({ type: SET_INITIALIZED });
 
-export const initializedSuccess = () => ({ type: SET_INITIALIZED });
-
-export const initializeAppThunkCreator = () => (dispatch) => {
+export const initializeAppThunkCreator = () => (dispatch: any) => {
   let propmise = dispatch(getAuthUserDataThunkCreator());
 
   propmise.then(() => {
