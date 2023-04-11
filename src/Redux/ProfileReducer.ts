@@ -24,7 +24,7 @@ type ProfileType = {
   fullName: string;
   contacts: ContactsType;
 };
-type PhotosType = {
+export type PhotosType = {
   small: string | null;
   large: string | null;
 };

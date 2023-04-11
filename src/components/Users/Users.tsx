@@ -3,8 +3,18 @@ import styles from './Users.module.css';
 import avatar from '../../assets/img/avatar.jpg';
 import { NavLink } from 'react-router-dom';
 import Paginator from './Paginator';
+import { UserType } from '../../Redux/UsersReducer';
 
-let Users = (props) => {
+let Users = (props: {
+  onPageChanged: (pageNumber: number) => void;
+  currentPage: number;
+  totalUsersCount: number;
+  pageSize: number;
+  users: Array<UserType>;
+  followingInProgress: Array<number>;
+  unFollowThunkCreator: (arg0: any) => void;
+  followThunkCreator: (arg0: any) => void;
+}) => {
   return (
     <div>
       <Paginator onPageChanged={props.onPageChanged} currentPage={props.currentPage} totalUsersCount={props.totalUsersCount} pageSize={props.pageSize} portionSize={10} />
