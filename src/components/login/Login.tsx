@@ -1,13 +1,27 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { FC } from 'react';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { Input } from '../common/FormsControl/FormControl';
 import { requiredField } from '../common/validate/validate';
 import { connect } from 'react-redux';
 import { loginThunkCreator } from '../../Redux/AuthReducer';
 import { Navigate } from 'react-router-dom';
 import styles from '../common/FormsControl/FormControl.module.css';
+import { AppStateType } from '../../Redux/ReduxStore';
 
-const LoginForm = (props) => {
+type MapsStateToPropsType = {
+  isAuth: boolean;
+  captchaUrl: string | null;
+};
+
+type LoginThunkCreatorType = {
+  loginThunkCreator: (email: string, password: string, rememberMe: boolean, captcha: null | undefined) => void;
+};
+
+type MyOwnPropsCaptcha = {
+  capthaUrl: string | null;
+};
+
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, MyOwnPropsCaptcha> & MyOwnPropsCaptcha> = (props, { captchaUrl }) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
@@ -21,8 +35,8 @@ const LoginForm = (props) => {
         Запомнить меня
       </div>
 
-      {props.captchaUrl && <img src={props.captchaUrl} alt="" />}
-      {props.captchaUrl && <Field name={'captcha'} placeholder={'Sumbols from image'} component={Input} validate={[requiredField]} />}
+      {captchaUrl && <img src={captchaUrl} alt="" />}
+      {captchaUrl && <Field name={'captcha'} placeholder={'Sumbols from image'} component={Input} validate={[requiredField]} />}
 
       {props.error && <div className={styles.form__summary_error}>{props.error}</div>}
       <div>
@@ -32,10 +46,16 @@ const LoginForm = (props) => {
   );
 };
 
-const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
+const LoginReduxForm = reduxForm<LoginFormValuesType, MyOwnPropsCaptcha>({ form: 'login' })(LoginForm);
 
-const Login = (props) => {
-  const onSubmit = (formData) => {
+type LoginFormValuesType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: null | undefined;
+};
+const Login: FC<MapsStateToPropsType & LoginThunkCreatorType> = (props) => {
+  const onSubmit = (formData: LoginFormValuesType) => {
     props.loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha);
   };
   if (props.isAuth) {
@@ -44,12 +64,12 @@ const Login = (props) => {
   return (
     <div>
       <h1>Login</h1>
-      <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
+      <LoginReduxForm onSubmit={onSubmit} capthaUrl={props.captchaUrl} />
     </div>
   );
 };
 
-const mapsStateToProps = (state) => ({
+const mapsStateToProps = (state: AppStateType): MapsStateToPropsType => ({
   isAuth: state.auth.isAuth,
   captchaUrl: state.auth.captchaUrl,
 });
